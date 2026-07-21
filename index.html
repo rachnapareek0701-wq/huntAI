@@ -413,22 +413,19 @@
     addThinking();
 
     try{
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1000,
-          system: "You are huntAI, a sharp, focused AI assistant. You help people track down answers, debug problems, and cut through noise. Keep a confident, precise, no-fluff tone without being curt.",
-          messages: history
-        })
+        body: JSON.stringify({ messages: history })
       });
       const data = await response.json();
       removeThinking();
 
       let replyText = "Something went wrong on the signal — try again.";
-      if(data && data.content){
-        replyText = data.content.map(b => b.text || "").filter(Boolean).join("\n");
+      if(data && data.reply){
+        replyText = data.reply;
+      } else if(data && data.error){
+        replyText = "Signal error: " + data.error;
       }
       addMessage('assistant', replyText);
       history.push({ role: 'assistant', content: replyText });
