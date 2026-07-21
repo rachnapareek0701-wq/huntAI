@@ -1,16 +1,18 @@
 # huntAI
 
 Chat UI unchanged from the original — the only change is that the browser
-now calls `/api/chat` on your own domain instead of hitting Anthropic
-directly from client-side JS (which only ever worked inside a Claude.ai
-artifact, and would expose your API key everywhere else).
+now calls `/api/chat` on your own domain instead of calling a model
+provider directly from client-side JS.
+
+This version runs on **Google's Gemini API**, which has a genuinely free
+tier (unlike Anthropic's or OpenAI's APIs, which are pay-as-you-go).
 
 ## Structure
 
 ```
 index.html      the chat UI (untouched, just points fetch() at /api/chat)
 api/chat.js     Vercel serverless function that holds the API key and
-                calls Anthropic on the frontend's behalf
+                calls Gemini on the frontend's behalf
 ```
 
 No dependencies to install — `api/chat.js` uses the `fetch` that's built
@@ -24,12 +26,20 @@ into Vercel's Node runtime.
    function — no build config needed.
 3. Before (or after) the first deploy, go to
    **Project Settings → Environment Variables** and add:
-   - `ANTHROPIC_API_KEY` — your key from
-     https://console.anthropic.com/settings/keys
-   - `ANTHROPIC_MODEL` — optional, defaults to `claude-sonnet-4-6`
+   - `GEMINI_API_KEY` — a free key from
+     https://aistudio.google.com/apikey (sign in with a Google account,
+     click "Create API key" — no card required for the free tier)
+   - `GEMINI_MODEL` — optional, defaults to `gemini-2.0-flash`
 4. Redeploy if you added the vars after the first deploy. That's it —
    your domain will serve the chat UI and `/api/chat` will answer
    requests with the key held server-side.
+
+## Free tier limits
+
+Google's free tier has rate limits (requests per minute/day) that reset
+regularly — plenty for personal projects and testing, but worth knowing
+about if you expect heavy traffic. Check current limits at
+https://ai.google.dev/gemini-api/docs/rate-limits
 
 ## Local testing
 
