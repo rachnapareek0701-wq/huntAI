@@ -4,7 +4,7 @@
 // project's Settings -> Environment Variables.
 // Get a free key at https://aistudio.google.com/apikey
 
-const MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-pro';
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash';
 
 const SYSTEM_PROMPT =
   "You are huntAI, a sharp, focused AI assistant. You help people track down " +
