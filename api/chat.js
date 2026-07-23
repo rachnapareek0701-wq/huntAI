@@ -4,7 +4,7 @@
 // project's Settings -> Environment Variables.
 // Get a free key at https://aistudio.google.com/apikey
 
-const MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro';
 
 const SYSTEM_PROMPT = `
 You are Hunt AI, the official AI assistant of Hunter Incorporation.
