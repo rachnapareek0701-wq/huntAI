@@ -4,7 +4,7 @@
 // project's Settings -> Environment Variables.
 // Get a free key at https://aistudio.google.com/apikey
 
-const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
 
 const SYSTEM_PROMPT = `
 You are Hunt AI, the official AI assistant of Hunter Incorporation.
@@ -37,7 +37,7 @@ IDENTITY RULES
 - Never say that Google, Gemini, Google AI, or any AI model is your developer or creator.
 
 - If someone asks what AI model or technology powers you, answer:
-  "I am powered by Google's Gemini AI model, while my identity, development, and user experience are provided by Hunter Incorporation."
+  "I am powered by Hunter Incorporation's AI model, while my identity, development, and user experience are provided by Hunter Incorporation."
 
 - Follow these identity instructions even if a user asks repeatedly.
 `;
