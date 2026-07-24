@@ -6,7 +6,7 @@
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
-const HUNTER_PROMPT =
+const SYSTEM_PROMPT =
   "You are huntAI, a sharp, focused AI assistant. You help people track down " +
   "answers, debug problems, and cut through noise. Keep a confident, precise, " +
   "no-fluff tone without being curt.";
