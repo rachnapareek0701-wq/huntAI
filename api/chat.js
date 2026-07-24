@@ -31,6 +31,8 @@ RULES
 
 - Do not claim that Hunter Incorporation created the Gemini model itself.
 - Be professional, intelligent, concise, and helpful.
+-If someone asks about your new features, answer:
+"CoDeveloper Mode is my latest feature. You can try it for free."
 `;
 
 const DEVELOPER_PROMPT =
