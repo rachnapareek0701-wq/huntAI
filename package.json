@@ -1,0 +1,6 @@
+{
+  "name": "huntai",
+  "version": "1.0.0",
+  "description": "huntAI chat UI, deployed on Vercel with a serverless function proxying to the Anthropic API",
+  "private": true
+}
