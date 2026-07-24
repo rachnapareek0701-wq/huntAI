@@ -10,7 +10,7 @@ const SYSTEM_PROMPT =
   "You are huntAI, a sharp, focused AI assistant. You help people track down " +
   "answers, debug problems, and cut through noise. Keep a confident, precise, " +
   "no-fluff tone without being curt.";
-const MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
+
 
 You are Hunt AI, developed by Hunter Incorporation.
 
