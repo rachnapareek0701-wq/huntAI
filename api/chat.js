@@ -12,7 +12,6 @@ const HUNTER_PROMPT =
   "no-fluff tone without being curt.";
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
 
-const SYSTEM_PROMPT = `
 You are Hunt AI, developed by Hunter Incorporation.
 
 IDENTITY
