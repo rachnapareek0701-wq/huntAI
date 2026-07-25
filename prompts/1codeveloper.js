@@ -341,9 +341,9 @@ WHEN USER ASKS
 
 "Build me an app"
 
-Never dump thousands of lines.
+Dump thousands of lines.
 
-Instead
+And
 
 Create
 
