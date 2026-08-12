@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hunt.ai - Signal Tracker</title>
+    <style>
+        /* CSS Reset and Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #0c0d0e; /* Deep black background */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font like in image */
+            color: #d1d1d1; /* Main text color */
+            display: flex;
+            justify-content: center; /* Center horizontally for a phone layout */
+            align-items: center; /* Center vertically for a phone layout */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Phone Container Mockup */
+        #phone-container {
+            width: 375px; /* Typical mobile width */
+            height: 812px; /* Typical mobile height */
+            background-color: #0c0d0e;
+            border-radius: 36px; /* Rounded corners */
+            border: 8px solid #222; /* Mock phone bezel */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Contains all elements */
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); /* Subtle shadow for depth */
+        }
+
+        /* Status Bar Mockup */
+        #status-bar {
+            height: 24px;
+            padding: 4px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #d1d1d1;
+            font-size: 12px;
+            margin-top: 10px; /* Space from top edge */
+        }
+        #status-bar-left {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        #status-bar-right {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        /* Simple icon placeholders */
+        .status-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background-color: #d1d1d1;
+        }
+        #battery-icon {
+            width: 16px;
+            height: 8px;
+            border: 1px solid #d1d1d1;
+            border-radius: 1px;
+            background-color: transparent;
+            position: relative;
+        }
+        #battery-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 1px;
+            bottom: 1px;
+            left: 1px;
+            background-color: #d1d1d1;
+        }
+        #battery-level {
+            margin-left: 2px;
+        }
+
+        /* Header Section */
+        header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222; /* Subtle divider */
+        }
+        #brand {
+            display: flex;
+            flex-direction: column;
+        }
+        #brand-logo-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #logo-svg {
+            width: 20px;
+            height: 20px;
+            stroke: #d1d1d1;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        #hunt-ai {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        #signal-tracker {
+            color: #d1d1d1;
+            font-size: 10px;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+        #status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #c9933a; /* Darker gold/brown colour */
+            font-size: 12px;
+            font-weight: bold;
+        }
+        #status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #c9933a;
+            border-radius: 50%;
+        }
+
+        /* Navigation Links */
+        nav {
+            padding: 12px 16px;
+            border-bottom: 1px solid #222;
+            font-size: 11px;
+            letter-spacing: 1.2px;
+            text-transform: lowercase;
+            color: #d1d1d1;
+            display: flex;
+            gap: 16px;
+        }
+        nav span {
+            cursor: pointer;
+        }
+        #separator-v {
+            width: 1px;
+            background-color: #222;
+            height: 12px;
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1; /* Pushes input field to bottom */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center the central element */
+            align-items: center;
+            padding: 16px;
+            text-align: center;
+        }
+        #central-element {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: -60px; /* Slight offset upward for visual balance */
+        }
+        #icon-svg-central {
+            width: 48px;
+            height: 48px;
+            stroke: #c9933a;
+            stroke-width: 1;
+            fill: none;
+        }
+        #icon-dot {
+            fill: #c9933a;
+        }
+        #nothing-text {
+            color: #d1d1d1;
+            font-size: 16px;
+            letter-spacing: 1.5px;
+            text-transform: lowercase;
+        }
+        #sub-text-block {
+            max-width: 280px;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            color: #d1d1d1;
+            font-size: 11px;
+        }
+        #hint-link {
+            text-decoration: underline;
+            color: #d1d1d1;
+        }
+
+        /* Footer and Input Field */
+        footer {
+            padding: 16px;
+            border-top: 1px solid #222;
+            background-color: #0c0d0e;
+        }
+        #input-area-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        #input-field {
+            border: 1px solid #c9933a; /* Darker gold/brown border */
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #input-placeholder {
+            color: #c9933a;
+            font-size: 12px;
+            text-transform: lowercase;
+            letter-spacing: 0.5px;
+        }
+        #send-button {
+            border: 1px solid #c9933a;
+            padding: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        #send-svg {
+            width: 12px;
+            height: 12px;
+            stroke: #c9933a;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        #input-sub-text {
+            color: #d1d1d1;
+            font-size: 10px;
+            margin-top: 4px;
+            letter-spacing: 1.2px;
+            text-transform: lowercase;
+        }
+
+        /* Mock Navigation Bar */
+        #nav-bar-bottom {
+            height: 24px;
+            background-color: #0c0d0e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 8px;
+        }
+        #nav-bar-line {
+            width: 120px;
+            height: 2px;
+            background-color: transparent;
+            position: relative;
+        }
+        #nav-bar-line::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #d1d1d1;
+            left: calc(50% - 12px);
+            bottom: 0;
+            border-radius: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="phone-container">
+        <!-- Status Bar -->
+        <div id="status-bar">
+            <div id="status-bar-left">
+                <span>3:16</span>
+                <div class="status-icon"></div>
+                <div class="status-icon"></div>
+            </div>
+            <div id="status-bar-right">
+                <div class="status-icon"></div>
+                <span>5G</span>
+                <div id="battery-icon"></div>
+                <span id="battery-level">81%</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <div id="brand">
+                <div id="brand-logo-name">
+                    <svg id="logo-svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="2" x2="12" y2="22"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <circle id="icon-dot" cx="12" cy="12" r="2.5" fill="none"/>
+                    </svg>
+                    <div id="hunt-ai">hunt.ai</div>
+                </div>
+                <div id="signal-tracker">SIGNAL TRACKER</div>
+            </div>
+            <div id="status">
+                <div id="status-dot"></div>
+                connected
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <span>capabilities</span>
+            <div id="separator-v"></div>
+            <span>new hunt</span>
+            <div id="separator-v"></div>
+            <span>clear trail</span>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div id="central-element">
+                <svg id="icon-svg-central" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="2" x2="12" y2="22"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <circle id="icon-dot" cx="12" cy="12" r="2.5"/>
+                </svg>
+                <div id="nothing-text">nothing on the trail yet</div>
+                <div id="sub-text-block">
+                    <span>Ask a question below and hunt.ai</span>
+                    <span>will track down an answer.</span>
+                    <span>Every reply is one message — no</span>
+                    <span>history is kept once you leave</span>
+                    <span>this page.</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Input Area -->
+        <footer>
+            <div id="input-area-container">
+                <div id="input-field">
+                    <div id="input-placeholder">What are you trying to find?</div>
+                    <div id="send-button">
+                        <svg id="send-svg" viewBox="0 0 24 24">
+                            <line x1="12" y1="22" x2="12" y2="2"/>
+                            <polyline points="5 9 12 2 19 9"/>
+                        </svg>
+                    </div>
+                </div>
+                <div id="input-sub-text">
+                    enter to send - shift+enter for a new line
+                </div>
+            </div>
+        </footer>
+
+        <!-- Mock Navigation Bar -->
+        <div id="nav-bar-bottom">
+            <div id="nav-bar-line"></div>
+        </div>
+    </div>
+</body>
+</html>
